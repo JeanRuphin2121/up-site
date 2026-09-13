@@ -1,0 +1,127 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import Icone from '../../components/Icone.astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const articles = await getCollection('articles', ({ data }) => !data.brouillon);
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+};
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(date);
+---
+
+<Base titre={article.data.titre} description={article.data.description}>
+  <article class="bg-white">
+    <div class="mx-auto max-w-3xl px-5 py-12 lg:px-8 lg:py-16">
+      <a
+        href="/blog/"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-up-violet transition-colors hover:text-up-magenta"
+      >
+        <Icone nom="fleche" class="h-4 w-4 rotate-180" />
+        Toutes les actualités
+      </a>
+
+      <header class="mt-7 border-b border-up-ligne pb-8">
+        <time datetime={article.data.date.toISOString()} class="text-sm font-semibold text-up-magenta">
+          {formatDate(article.data.date)}
+        </time>
+        <h1 class="titre-up mt-3 text-3xl sm:text-4xl">{article.data.titre}</h1>
+        <p class="prose-up mt-4 text-lg text-up-gris">{article.data.description}</p>
+        <p class="mt-4 text-sm text-up-gris">Publié par {article.data.auteur}</p>
+      </header>
+
+      <div class="contenu-article mt-9">
+        <Content />
+      </div>
+
+      <div class="mt-14 rounded-3xl bg-up-brume p-7 text-center sm:p-9">
+        <h2 class="titre-up text-xl">Une question sur cet article ?</h2>
+        <p class="prose-up mx-auto mt-3 text-up-gris">
+          Nous répondons volontiers, et nous pouvons vous orienter vers le bon interlocuteur.
+        </p>
+        <a href="/contact/" class="bouton bouton-plein mt-6">Nous contacter</a>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+  /* Mise en forme du Markdown rédigé par le client.
+     Volontairement sobre : le contenu doit rester lisible même mal formaté. */
+  .contenu-article {
+    max-width: 68ch;
+    line-height: 1.75;
+    color: #55496b;
+  }
+
+  .contenu-article > * + * {
+    margin-top: 1.15rem;
+  }
+
+  .contenu-article h2 {
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: #1a1029;
+  }
+
+  .contenu-article h3 {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a1029;
+  }
+
+  .contenu-article strong {
+    font-weight: 600;
+    color: #1a1029;
+  }
+
+  .contenu-article a {
+    color: #5b2c8d;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .contenu-article a:hover {
+    color: #e6007e;
+  }
+
+  .contenu-article ul,
+  .contenu-article ol {
+    padding-left: 1.3rem;
+  }
+
+  .contenu-article ul {
+    list-style: disc;
+  }
+
+  .contenu-article ol {
+    list-style: decimal;
+  }
+
+  .contenu-article li + li {
+    margin-top: 0.5rem;
+  }
+
+  .contenu-article blockquote {
+    border-left: 3px solid #e6007e;
+    padding-left: 1.25rem;
+    font-style: italic;
+    color: #1a1029;
+  }
+
+  .contenu-article img {
+    border-radius: 1rem;
+  }
+</style>

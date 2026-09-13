@@ -1,0 +1,52 @@
+---
+/**
+ * Séparateur en vague — le motif qui traverse les deux kakémonos.
+ *
+ * `sens` = "descendante" : la vague plonge vers le bas (on quitte une zone colorée).
+ * `sens` = "montante"    : la vague remonte (on entre dans une zone colorée).
+ * `couleur` : la teinte de la vague elle-même.
+ */
+interface Props {
+  sens?: 'descendante' | 'montante';
+  couleur?: 'degrade' | 'blanc' | 'brume';
+  class?: string;
+}
+
+const { sens = 'descendante', couleur = 'degrade', class: classe = '' } = Astro.props;
+
+const trace =
+  sens === 'descendante'
+    ? 'M0,0 C240,86 480,86 720,48 C960,10 1200,10 1440,52 L1440,0 Z'
+    : 'M0,96 C240,10 480,10 720,48 C960,86 1200,86 1440,44 L1440,96 Z';
+
+const traceSecondaire =
+  sens === 'descendante'
+    ? 'M0,0 C260,70 520,70 760,34 C1000,-2 1220,-2 1440,36 L1440,0 Z'
+    : 'M0,96 C260,26 520,26 760,62 C1000,98 1220,98 1440,60 L1440,96 Z';
+
+const aplat = couleur === 'blanc' ? '#ffffff' : couleur === 'brume' ? '#f7f4fa' : null;
+const id = `vague-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class={`pointer-events-none w-full overflow-hidden leading-none ${classe}`} aria-hidden="true">
+  <svg
+    viewBox="0 0 1440 96"
+    preserveAspectRatio="none"
+    class="block h-12 w-full sm:h-16 lg:h-24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {
+      aplat === null && (
+        <defs>
+          <linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#3d1c63" />
+            <stop offset="45%" stop-color="#5b2c8d" />
+            <stop offset="100%" stop-color="#e6007e" />
+          </linearGradient>
+        </defs>
+      )
+    }
+    <path d={traceSecondaire} fill={aplat ?? `url(#${id})`} opacity={aplat ? '0.45' : '0.35'}></path>
+    <path d={trace} fill={aplat ?? `url(#${id})`}></path>
+  </svg>
+</div>

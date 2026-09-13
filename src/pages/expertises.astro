@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import Vague from '../components/Vague.astro';
+import CartePole from '../components/CartePole.astro';
+import Icone from '../components/Icone.astro';
+import { poles } from '../data/site';
+---
+
+<Base
+  titre="Nos expertises"
+  description="Éducation et formation, insertion professionnelle, actions sociales et intermédiation commerciale : les quatre domaines d'intervention d'Univers des Possibilités."
+>
+  <section class="degrade-up text-white">
+    <div class="mx-auto max-w-4xl px-5 py-14 text-center lg:px-8 lg:py-20">
+      <h1 class="titre-up text-3xl sm:text-4xl lg:text-5xl">Nos expertises</h1>
+      <p class="prose-up mx-auto mt-6 text-white/90">
+        Quatre pôles, une seule logique : partir de la situation réelle de la personne ou de
+        l'organisation, puis l'accompagner jusqu'au résultat.
+      </p>
+    </div>
+  </section>
+
+  <Vague sens="descendante" couleur="degrade" class="-mt-px rotate-180" />
+
+  <!-- Sommaire cliquable -->
+  <nav class="bg-white" aria-label="Sommaire des pôles">
+    <ul class="mx-auto flex max-w-6xl flex-wrap justify-center gap-2.5 px-5 pb-4 lg:px-8">
+      {
+        poles.map((pole) => (
+          <li>
+            <a
+              href={`#${pole.id}`}
+              class="inline-flex items-center gap-2 rounded-full border border-up-ligne px-4 py-2 text-sm font-semibold text-up-violet transition-colors hover:bg-up-brume"
+            >
+              <Icone nom={pole.icone} class="h-4 w-4" />
+              {pole.titre}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl space-y-20 px-5 py-14 lg:space-y-28 lg:px-8 lg:py-20">
+      {poles.map((pole, i) => <CartePole pole={pole} inverse={i % 2 === 1} />)}
+    </div>
+  </section>
+
+  <section class="bg-up-brume">
+    <div class="mx-auto max-w-4xl px-5 py-14 text-center lg:px-8 lg:py-18">
+      <h2 class="titre-up text-2xl sm:text-3xl">Votre situation ne rentre dans aucune case ?</h2>
+      <p class="prose-up mx-auto mt-5 text-up-gris">
+        C'est souvent le cas, et ce n'est pas un problème. Expliquez-nous votre besoin, nous vous
+        dirons franchement si nous sommes les bons interlocuteurs.
+      </p>
+      <a href="/contact/" class="bouton bouton-plein mt-8">
+        Nous exposer votre besoin
+        <Icone nom="fleche" class="h-4 w-4" />
+      </a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,35 @@
+---
+/**
+ * Faisceau de lignes ondulées — le motif discret qui longe le bord gauche
+ * du kakémono des quatre pôles. Purement décoratif.
+ */
+interface Props {
+  class?: string;
+  couleur?: string;
+}
+
+const { class: classe = '', couleur = '#5b2c8d' } = Astro.props;
+
+// Sept lignes décalées verticalement, même tracé.
+const lignes = Array.from({ length: 7 }, (_, i) => i * 15);
+---
+
+<svg
+  class={`pointer-events-none select-none ${classe}`}
+  viewBox="0 0 220 320"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  {
+    lignes.map((decalage, i) => (
+      <path
+        d={`M-10 ${40 + decalage} C 50 ${decalage - 5}, 90 ${110 + decalage}, 150 ${60 + decalage} S 220 ${20 + decalage}, 250 ${70 + decalage}`}
+        stroke={couleur}
+        stroke-width="1.4"
+        opacity={0.55 - i * 0.055}
+        stroke-linecap="round"
+      />
+    ))
+  }
+</svg>

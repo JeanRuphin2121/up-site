@@ -1,0 +1,58 @@
+---
+import Icone from './Icone.astro';
+import type { Pole } from '../data/site';
+
+interface Props {
+  pole: Pole;
+  /** Inverse le sens médaillon / texte, pour reproduire l'alternance du kakémono. */
+  inverse?: boolean;
+  /** Version courte pour la page d'accueil (sans la liste des prestations). */
+  resume?: boolean;
+}
+
+const { pole, inverse = false, resume = false } = Astro.props;
+---
+
+<article
+  id={resume ? undefined : pole.id}
+  class={`flex flex-col items-center gap-7 sm:gap-10 md:items-start lg:gap-14 ${
+    inverse ? 'md:flex-row-reverse' : 'md:flex-row'
+  }`}
+>
+  <div class="medaillon h-28 w-28 shrink-0 sm:h-36 sm:w-36 lg:h-44 lg:w-44">
+    <span>
+      <Icone nom={pole.icone} class="h-12 w-12 text-up-violet sm:h-16 sm:w-16 lg:h-20 lg:w-20" />
+    </span>
+  </div>
+
+  <div class={`flex-1 text-center md:text-left ${inverse ? 'md:text-right' : ''}`}>
+    <h3 class="titre-up text-2xl text-up-encre sm:text-3xl">
+      {pole.titre}
+    </h3>
+
+    <p
+      class={`prose-up mt-3 text-base font-medium text-up-violet sm:text-lg ${
+        inverse ? 'md:ml-auto' : ''
+      } mx-auto md:mx-0`}
+    >
+      {pole.accroche}
+    </p>
+
+    <p class={`prose-up mt-4 text-up-gris ${inverse ? 'md:ml-auto' : ''} mx-auto md:mx-0`}>
+      {pole.intro}
+    </p>
+
+    {
+      !resume && (
+        <ul class={`mt-6 space-y-2.5 text-left ${inverse ? 'md:ml-auto md:max-w-md' : 'md:max-w-md'} mx-auto md:mx-0`}>
+          {pole.prestations.map((prestation) => (
+            <li class="flex items-start gap-3 text-up-encre">
+              <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-up-magenta" />
+              <span>{prestation}</span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</article>

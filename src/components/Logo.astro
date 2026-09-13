@@ -1,0 +1,33 @@
+---
+/**
+ * Logo composé en typographie : « U » violet, « P » magenta, baseline dessous.
+ *
+ * ⚠️ Si le client fournit son logo vectoriel (.svg), déposer le fichier dans
+ * /public/logo-up.svg et remplacer le bloc ci-dessous par une balise <img>.
+ */
+interface Props {
+  variante?: 'couleur' | 'blanc';
+  avecBaseline?: boolean;
+  class?: string;
+}
+
+const { variante = 'couleur', avecBaseline = true, class: classe = '' } = Astro.props;
+---
+
+<span class={`inline-flex flex-col leading-none ${classe}`}>
+  <span class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+    <span class={variante === 'blanc' ? 'text-white' : 'text-up-violet'}>U</span><span
+      class={variante === 'blanc' ? 'text-white/85' : 'text-up-magenta'}>P</span>
+  </span>
+  {
+    avecBaseline && (
+      <span
+        class={`mt-0.5 text-[0.58rem] font-medium tracking-wide sm:text-[0.65rem] ${
+          variante === 'blanc' ? 'text-white/80' : 'text-up-gris'
+        }`}
+      >
+        Univers des Possibilités
+      </span>
+    )
+  }
+</span>

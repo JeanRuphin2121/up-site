@@ -1,0 +1,96 @@
+---
+import Logo from './Logo.astro';
+import { navigation, contact } from '../data/site';
+
+const chemin = Astro.url.pathname;
+const estActif = (href: string) =>
+  href === '/' ? chemin === '/' : chemin.startsWith(href.replace(/\/$/, ''));
+---
+
+<header class="sticky top-0 z-50 border-b border-up-ligne bg-white/95 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 lg:px-8">
+    <a href="/" class="shrink-0" aria-label="Univers des Possibilités — accueil">
+      <Logo />
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Navigation principale">
+      {
+        navigation.map((lien) => (
+          <a
+            href={lien.href}
+            aria-current={estActif(lien.href) ? 'page' : undefined}
+            class={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+              estActif(lien.href)
+                ? 'bg-up-brume text-up-violet'
+                : 'text-up-gris hover:text-up-violet'
+            }`}
+          >
+            {lien.label}
+          </a>
+        ))
+      }
+      <a href={`tel:${contact.telPrincipalBrut}`} class="bouton bouton-plein ml-3 !px-5 !py-2.5 !text-sm">
+        Nous appeler
+      </a>
+    </nav>
+
+    <button
+      type="button"
+      id="bascule-menu"
+      class="grid h-11 w-11 place-items-center rounded-full border border-up-ligne text-up-violet lg:hidden"
+      aria-expanded="false"
+      aria-controls="menu-mobile"
+      aria-label="Ouvrir le menu"
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div id="menu-mobile" hidden class="border-t border-up-ligne bg-white lg:hidden">
+    <nav class="mx-auto max-w-6xl px-5 py-4" aria-label="Navigation mobile">
+      <ul class="flex flex-col gap-1">
+        {
+          navigation.map((lien) => (
+            <li>
+              <a
+                href={lien.href}
+                aria-current={estActif(lien.href) ? 'page' : undefined}
+                class={`block rounded-xl px-4 py-3 font-semibold ${
+                  estActif(lien.href) ? 'bg-up-brume text-up-violet' : 'text-up-encre'
+                }`}
+              >
+                {lien.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href={`tel:${contact.telPrincipalBrut}`} class="bouton bouton-plein mt-4 w-full">
+        {contact.telPrincipal}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const bascule = document.getElementById('bascule-menu');
+  const menu = document.getElementById('menu-mobile');
+
+  bascule?.addEventListener('click', () => {
+    const ouvert = bascule.getAttribute('aria-expanded') === 'true';
+    bascule.setAttribute('aria-expanded', String(!ouvert));
+    bascule.setAttribute('aria-label', ouvert ? 'Ouvrir le menu' : 'Fermer le menu');
+    if (menu) menu.hidden = ouvert;
+  });
+
+  // Referme le menu quand on passe en affichage large.
+  const large = window.matchMedia('(min-width: 1024px)');
+  large.addEventListener('change', (e) => {
+    if (e.matches && menu) {
+      menu.hidden = true;
+      bascule?.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>

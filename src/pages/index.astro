@@ -1,0 +1,139 @@
+---
+import Base from '../layouts/Base.astro';
+import Vague from '../components/Vague.astro';
+import Ondes from '../components/Ondes.astro';
+import CartePole from '../components/CartePole.astro';
+import Icone from '../components/Icone.astro';
+import { site, contact, poles, servicesMonture } from '../data/site';
+---
+
+<Base titre={site.nom}>
+  <!-- ===================== Accroche ===================== -->
+  <section class="relative overflow-hidden bg-white">
+    <Ondes class="absolute -left-16 top-8 h-[26rem] w-72 opacity-70 lg:left-0 lg:h-[34rem] lg:w-96" />
+    <Ondes
+      class="absolute -right-20 bottom-0 hidden h-[24rem] w-80 rotate-180 opacity-50 lg:block"
+      couleur="#e6007e"
+    />
+
+    <div class="relative mx-auto max-w-6xl px-5 pb-16 pt-14 text-center sm:pt-20 lg:px-8 lg:pb-24 lg:pt-28">
+      <p class="text-sm font-semibold tracking-wide text-up-magenta sm:text-base">
+        {site.promesse}
+      </p>
+
+      <h1 class="titre-up mx-auto mt-5 max-w-4xl text-4xl sm:text-5xl lg:text-6xl">
+        Votre avenir,<br />
+        <span class="texte-degrade">notre accompagnement</span>
+      </h1>
+
+      <p class="prose-up mx-auto mt-7 text-lg text-up-gris">
+        Univers des Possibilités accompagne les personnes et les organisations à chaque étape :
+        se former, trouver sa place, agir pour les autres et commercer avec intégrité.
+      </p>
+
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="/expertises/" class="bouton bouton-plein w-full sm:w-auto">
+          Découvrir nos expertises
+        </a>
+        <a href="/contact/" class="bouton bouton-ligne w-full sm:w-auto"> Nous contacter </a>
+      </div>
+    </div>
+  </section>
+
+  <Vague sens="montante" couleur="degrade" class="-mb-px" />
+
+  <!-- ===================== Qui nous sommes ===================== -->
+  <section class="degrade-up text-white">
+    <div class="mx-auto max-w-4xl px-5 py-14 text-center lg:px-8 lg:py-20">
+      <h2 class="titre-up text-2xl sm:text-3xl lg:text-4xl">Une même conviction, quatre terrains</h2>
+      <p class="prose-up mx-auto mt-6 text-white/90">
+        Nous croyons que chacun porte en lui plus de possibilités qu'il n'en soupçonne. Notre rôle
+        est de les rendre atteignables : par la formation, par l'accès au travail, par la solidarité
+        concrète et par des échanges commerciaux honnêtes.
+      </p>
+      <p class="mt-8 text-xl font-extrabold tracking-wide sm:text-2xl">{site.signature}</p>
+    </div>
+  </section>
+
+  <Vague sens="descendante" couleur="degrade" class="-mt-px rotate-180" />
+
+  <!-- ===================== Les quatre pôles ===================== -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-24">
+      <h2 class="titre-up text-center text-3xl sm:text-4xl">Nos domaines d'intervention</h2>
+
+      <div class="mt-14 space-y-16 lg:mt-20 lg:space-y-24">
+        {poles.map((pole, i) => <CartePole pole={pole} inverse={i % 2 === 1} resume />)}
+      </div>
+
+      <div class="mt-16 text-center">
+        <a href="/expertises/" class="bouton bouton-plein">
+          Voir le détail de chaque pôle
+          <Icone nom="fleche" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== UP Monture ===================== -->
+  <section class="bg-up-brume">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:px-8 lg:py-24">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <p class="text-sm font-semibold tracking-wide text-up-magenta">Notre service optique</p>
+          <h2 class="titre-up mt-3 text-3xl sm:text-4xl">UP Monture</h2>
+          <p class="prose-up mt-5 text-lg font-medium text-up-violet">
+            Votre expert optique mobile : nous venons à vous.
+          </p>
+          <p class="prose-up mt-4 text-up-gris">
+            Entretien de vos lunettes à domicile, sélection de montures pour toute la famille, et
+            mise en relation avec des opticiens et ophtalmologistes agréés.
+          </p>
+          <a href="/up-monture/" class="bouton bouton-plein mt-8">
+            Découvrir UP Monture
+            <Icone nom="fleche" class="h-4 w-4" />
+          </a>
+        </div>
+
+        <ul class="space-y-5">
+          {
+            servicesMonture.map((service) => (
+              <li class="flex items-start gap-4 rounded-2xl bg-white p-5 shadow-sm shadow-up-violet/5">
+                <div class="medaillon h-14 w-14">
+                  <span>
+                    <Icone nom={service.icone} class="h-7 w-7 text-up-violet" />
+                  </span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-up-encre">{service.titre}</h3>
+                  <p class="mt-1 text-sm leading-relaxed text-up-gris">{service.accroche}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Appel à l'action ===================== -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-4xl px-5 py-16 text-center lg:px-8 lg:py-20">
+      <h2 class="titre-up text-3xl sm:text-4xl">Parlons de votre projet</h2>
+      <p class="prose-up mx-auto mt-5 text-up-gris">
+        Un besoin de formation, une recherche d'emploi, un projet commercial ou une action de
+        terrain à monter : écrivez-nous, nous répondons vite.
+      </p>
+
+      <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href={`tel:${contact.telPrincipalBrut}`} class="bouton bouton-plein w-full sm:w-auto">
+          <Icone nom="telephone" class="h-4 w-4" />
+          {contact.telPrincipal}
+        </a>
+        <a href="/contact/" class="bouton bouton-ligne w-full sm:w-auto">
+          Écrire un message
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,67 @@
+---
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-800.css';
+import '../styles/global.css';
+
+import Entete from '../components/Entete.astro';
+import PiedDePage from '../components/PiedDePage.astro';
+import BoutonWhatsApp from '../components/BoutonWhatsApp.astro';
+import { site } from '../data/site';
+
+interface Props {
+  titre: string;
+  description?: string;
+  /** Chemin d'une image de partage social, relatif à /public. */
+  image?: string;
+}
+
+const { titre, description = site.description, image = '/partage.png' } = Astro.props;
+
+const titreComplet = titre === site.nom ? `${site.nom} — ${site.baseline}` : `${titre} | ${site.nom}`;
+const urlCanonique = new URL(Astro.url.pathname, Astro.site ?? site.url);
+const urlImage = new URL(image, Astro.site ?? site.url);
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{titreComplet}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={urlCanonique} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.nom} />
+    <meta property="og:title" content={titreComplet} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={urlCanonique} />
+    <meta property="og:image" content={urlImage} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#5b2c8d" />
+
+    <!--
+      Cloudflare Web Analytics — sans cookie, donc aucun bandeau de consentement requis.
+      ⚠️ Remplacer TOKEN_A_REMPLACER par le jeton fourni dans le tableau de bord Cloudflare,
+      puis retirer le commentaire autour de la balise <script>.
+
+      <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "TOKEN_A_REMPLACER"}'></script>
+    -->
+  </head>
+
+  <body class="flex min-h-screen flex-col">
+    <a href="#contenu" class="saut-contenu">Aller au contenu</a>
+    <Entete />
+    <main id="contenu" class="flex-1">
+      <slot />
+    </main>
+    <PiedDePage />
+    <BoutonWhatsApp />
+  </body>
+</html>

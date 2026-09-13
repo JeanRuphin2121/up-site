@@ -1,0 +1,182 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Charte Univers des Possibilités
+   Couleurs et formes relevées directement sur les kakémonos officiels.
+   ========================================================================== */
+
+@theme {
+  --color-up-violet: #5b2c8d;
+  --color-up-violet-fonce: #3d1c63;
+  --color-up-magenta: #e6007e;
+  --color-up-encre: #1a1029;
+  --color-up-gris: #55496b;
+  --color-up-brume: #f7f4fa;
+  --color-up-ligne: #e8dff2;
+
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+  /* Compense la hauteur de l'en-tête fixe quand on arrive sur une ancre. */
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background-color: #ffffff;
+  color: var(--color-up-encre);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Les grands titres reprennent le traitement des supports imprimés :
+   sans-serif très gras, en majuscules, interlettrage resserré. */
+.titre-up {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+/* Longueur de ligne confortable pour le corps de texte. */
+.prose-up {
+  max-width: 62ch;
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------------------------------
+   Dégradé signature violet → magenta
+   -------------------------------------------------------------------------- */
+
+.degrade-up {
+  background-image: linear-gradient(
+    115deg,
+    var(--color-up-violet-fonce) 0%,
+    var(--color-up-violet) 42%,
+    var(--color-up-magenta) 100%
+  );
+}
+
+.texte-degrade {
+  background-image: linear-gradient(105deg, var(--color-up-violet) 0%, var(--color-up-magenta) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Médaillons circulaires — le motif récurrent des kakémonos.
+   L'anneau est en dégradé, l'intérieur reste clair.
+   -------------------------------------------------------------------------- */
+
+.medaillon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  background-image: linear-gradient(135deg, var(--color-up-violet) 0%, var(--color-up-magenta) 100%);
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.medaillon > * {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Boutons
+   -------------------------------------------------------------------------- */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 600;
+  font-size: 0.975rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.bouton-plein {
+  background-image: linear-gradient(105deg, var(--color-up-violet) 0%, var(--color-up-magenta) 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 20px -10px rgba(91, 44, 141, 0.75);
+}
+
+.bouton-plein:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 26px -12px rgba(230, 0, 126, 0.7);
+}
+
+.bouton-ligne {
+  border: 2px solid var(--color-up-violet);
+  color: var(--color-up-violet);
+  background-color: transparent;
+}
+
+.bouton-ligne:hover {
+  background-color: var(--color-up-violet);
+  color: #ffffff;
+}
+
+.bouton-clair {
+  background-color: #ffffff;
+  color: var(--color-up-violet);
+}
+
+.bouton-clair:hover {
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   Accessibilité
+   -------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 3px solid var(--color-up-magenta);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.saut-contenu {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
+  color: var(--color-up-violet);
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.saut-contenu:focus {
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

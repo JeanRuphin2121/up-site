@@ -1,0 +1,249 @@
+---
+import Base from '../layouts/Base.astro';
+import Vague from '../components/Vague.astro';
+import Icone from '../components/Icone.astro';
+import { contact, web3formsKey, poles } from '../data/site';
+
+const messageWhatsApp = encodeURIComponent('Bonjour, je vous contacte depuis votre site internet.');
+---
+
+<Base
+  titre="Contact"
+  description="Contactez Univers des Possibilités : téléphone, WhatsApp, e-mail ou formulaire de contact."
+>
+  <section class="degrade-up text-white">
+    <div class="mx-auto max-w-4xl px-5 py-14 text-center lg:px-8 lg:py-20">
+      <h1 class="titre-up text-3xl sm:text-4xl lg:text-5xl">Nous contacter</h1>
+      <p class="prose-up mx-auto mt-6 text-white/90">
+        Le plus rapide reste WhatsApp ou le téléphone. Le formulaire convient mieux si votre
+        situation demande quelques explications.
+      </p>
+    </div>
+  </section>
+
+  <Vague sens="descendante" couleur="degrade" class="-mt-px rotate-180" />
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-12 lg:px-8 lg:py-16">
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
+        <!-- Coordonnées directes -->
+        <div>
+          <h2 class="titre-up text-2xl">Nous joindre directement</h2>
+
+          <ul class="mt-7 space-y-4">
+            <li>
+              <a
+                href={`https://wa.me/${contact.whatsapp}?text=${messageWhatsApp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4 transition-colors hover:bg-up-brume"
+              >
+                <div class="medaillon h-12 w-12">
+                  <span><Icone nom="whatsapp" class="h-5 w-5 text-up-violet" /></span>
+                </div>
+                <div>
+                  <p class="font-bold text-up-encre">WhatsApp</p>
+                  <p class="text-sm text-up-gris">Réponse en général sous quelques heures</p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a
+                href={`tel:${contact.telPrincipalBrut}`}
+                class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4 transition-colors hover:bg-up-brume"
+              >
+                <div class="medaillon h-12 w-12">
+                  <span><Icone nom="telephone" class="h-5 w-5 text-up-violet" /></span>
+                </div>
+                <div>
+                  <p class="font-bold text-up-encre">{contact.telPrincipal}</p>
+                  <p class="text-sm text-up-gris">Ligne principale</p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a
+                href={`tel:${contact.telSecondaireBrut}`}
+                class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4 transition-colors hover:bg-up-brume"
+              >
+                <div class="medaillon h-12 w-12">
+                  <span><Icone nom="telephone" class="h-5 w-5 text-up-violet" /></span>
+                </div>
+                <div>
+                  <p class="font-bold text-up-encre">{contact.telSecondaire}</p>
+                  <p class="text-sm text-up-gris">Second numéro</p>
+                </div>
+              </a>
+            </li>
+
+            <li>
+              <a
+                href={`mailto:${contact.email}`}
+                class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4 transition-colors hover:bg-up-brume"
+              >
+                <div class="medaillon h-12 w-12">
+                  <span><Icone nom="enveloppe" class="h-5 w-5 text-up-violet" /></span>
+                </div>
+                <div>
+                  <p class="break-all font-bold text-up-encre">{contact.email}</p>
+                  <p class="text-sm text-up-gris">Pour les demandes détaillées</p>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Formulaire -->
+        <div>
+          <h2 class="titre-up text-2xl">Nous écrire</h2>
+          <p class="prose-up mt-3 text-up-gris">
+            Tous les champs marqués d'une étoile sont nécessaires pour vous répondre.
+          </p>
+
+          <form id="formulaire-contact" class="mt-7 space-y-5">
+            <input type="hidden" name="access_key" value={web3formsKey} />
+            <input type="hidden" name="subject" value="Nouveau message depuis le site UP" />
+            <input type="hidden" name="from_name" value="Site Univers des Possibilités" />
+            <!-- Piège à robots : invisible pour les humains, rempli par les automates. -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" aria-hidden="true" />
+
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="nom" class="block text-sm font-semibold text-up-encre">
+                  Nom et prénom <span class="text-up-magenta">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="nom"
+                  name="nom"
+                  required
+                  autocomplete="name"
+                  class="mt-2 w-full rounded-xl border border-up-ligne bg-white px-4 py-3 text-up-encre outline-none transition-colors focus:border-up-violet"
+                />
+              </div>
+
+              <div>
+                <label for="telephone" class="block text-sm font-semibold text-up-encre">
+                  Téléphone
+                </label>
+                <input
+                  type="tel"
+                  id="telephone"
+                  name="telephone"
+                  autocomplete="tel"
+                  class="mt-2 w-full rounded-xl border border-up-ligne bg-white px-4 py-3 text-up-encre outline-none transition-colors focus:border-up-violet"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-semibold text-up-encre">
+                Adresse e-mail <span class="text-up-magenta">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                autocomplete="email"
+                class="mt-2 w-full rounded-xl border border-up-ligne bg-white px-4 py-3 text-up-encre outline-none transition-colors focus:border-up-violet"
+              />
+            </div>
+
+            <div>
+              <label for="sujet" class="block text-sm font-semibold text-up-encre">
+                Votre demande concerne
+              </label>
+              <select
+                id="sujet"
+                name="sujet"
+                class="mt-2 w-full rounded-xl border border-up-ligne bg-white px-4 py-3 text-up-encre outline-none transition-colors focus:border-up-violet"
+              >
+                {poles.map((pole) => <option value={pole.titre}>{pole.titre}</option>)}
+                <option value="UP Monture">UP Monture</option>
+                <option value="Autre">Autre sujet</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-semibold text-up-encre">
+                Votre message <span class="text-up-magenta">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required
+                class="mt-2 w-full rounded-xl border border-up-ligne bg-white px-4 py-3 text-up-encre outline-none transition-colors focus:border-up-violet"
+              ></textarea>
+            </div>
+
+            <button type="submit" id="bouton-envoi" class="bouton bouton-plein w-full">
+              Envoyer le message
+            </button>
+
+            <p
+              id="retour-formulaire"
+              role="status"
+              aria-live="polite"
+              class="hidden rounded-xl px-4 py-3 text-sm font-medium"
+            >
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const formulaire = document.getElementById('formulaire-contact') as HTMLFormElement | null;
+  const bouton = document.getElementById('bouton-envoi') as HTMLButtonElement | null;
+  const retour = document.getElementById('retour-formulaire') as HTMLParagraphElement | null;
+
+  const afficher = (texte: string, succes: boolean) => {
+    if (!retour) return;
+    retour.textContent = texte;
+    retour.className = `rounded-xl px-4 py-3 text-sm font-medium ${
+      succes ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+    }`;
+  };
+
+  formulaire?.addEventListener('submit', async (evenement) => {
+    evenement.preventDefault();
+    if (!bouton) return;
+
+    const libelleInitial = bouton.textContent;
+    bouton.disabled = true;
+    bouton.textContent = 'Envoi en cours…';
+
+    try {
+      const reponse = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(formulaire),
+      });
+      const resultat = await reponse.json();
+
+      if (reponse.ok && resultat.success) {
+        afficher('Message envoyé. Nous vous répondons au plus vite.', true);
+        formulaire.reset();
+      } else {
+        afficher(
+          "L'envoi a échoué. Écrivez-nous directement sur WhatsApp ou par e-mail.",
+          false
+        );
+      }
+    } catch {
+      afficher(
+        "L'envoi a échoué, la connexion semble interrompue. Réessayez ou passez par WhatsApp.",
+        false
+      );
+    } finally {
+      bouton.disabled = false;
+      bouton.textContent = libelleInitial;
+    }
+  });
+</script>

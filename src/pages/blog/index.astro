@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Vague from '../../components/Vague.astro';
+import Icone from '../../components/Icone.astro';
+
+const articles = (await getCollection('articles', ({ data }) => !data.brouillon)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(date);
+---
+
+<Base
+  titre="Actualités"
+  description="Les actions, sessions de formation et annonces d'Univers des Possibilités."
+>
+  <section class="degrade-up text-white">
+    <div class="mx-auto max-w-4xl px-5 py-14 text-center lg:px-8 lg:py-20">
+      <h1 class="titre-up text-3xl sm:text-4xl lg:text-5xl">Actualités</h1>
+      <p class="prose-up mx-auto mt-6 text-white/90">
+        Nos actions de terrain, nos sessions de formation et les informations utiles à ceux que nous
+        accompagnons.
+      </p>
+    </div>
+  </section>
+
+  <Vague sens="descendante" couleur="degrade" class="-mt-px rotate-180" />
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-4xl px-5 py-12 lg:px-8 lg:py-16">
+      {
+        articles.length === 0 ? (
+          <div class="rounded-3xl border-2 border-dashed border-up-ligne px-6 py-14 text-center">
+            <h2 class="titre-up text-xl text-up-violet">Aucun article pour le moment</h2>
+            <p class="prose-up mx-auto mt-3 text-up-gris">
+              Les prochaines annonces paraîtront ici. En attendant, écrivez-nous pour être prévenu
+              de nos prochaines actions.
+            </p>
+            <a href="/contact/" class="bouton bouton-plein mt-7">
+              Nous contacter
+            </a>
+          </div>
+        ) : (
+          <ul class="space-y-6">
+            {articles.map((article) => (
+              <li>
+                <a
+                  href={`/blog/${article.id}/`}
+                  class="block rounded-3xl border border-up-ligne p-6 transition-colors hover:border-up-violet hover:bg-up-brume sm:p-8"
+                >
+                  <time datetime={article.data.date.toISOString()} class="text-sm font-semibold text-up-magenta">
+                    {formatDate(article.data.date)}
+                  </time>
+                  <h2 class="titre-up mt-2.5 text-xl text-up-encre sm:text-2xl">
+                    {article.data.titre}
+                  </h2>
+                  <p class="prose-up mt-3 text-up-gris">{article.data.description}</p>
+                  <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-up-violet">
+                    Lire l'article
+                    <Icone nom="fleche" class="h-4 w-4" />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</Base>

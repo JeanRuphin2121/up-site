@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import Vague from '../components/Vague.astro';
+import { site, contact, mentionMonture } from '../data/site';
+
+/**
+ * ⚠️ À COMPLÉTER AVEC LE CLIENT avant la mise en ligne :
+ * raison sociale exacte, statut juridique, numéro d'enregistrement,
+ * adresse du siège et nom du responsable de publication.
+ * Les valeurs ci-dessous sont des espaces réservés explicites.
+ */
+const editeur = {
+  raisonSociale: 'Univers des Possibilités',
+  statut: 'À COMPLÉTER — statut juridique (association, SARL, entreprise individuelle…)',
+  immatriculation: 'À COMPLÉTER — numéro d’enregistrement ou RCCM',
+  siege: 'À COMPLÉTER — adresse du siège',
+  responsable: 'À COMPLÉTER — nom du responsable de publication',
+};
+
+const sections = [
+  {
+    titre: 'Éditeur du site',
+    contenu: [
+      `Le présent site est édité par ${editeur.raisonSociale}.`,
+      `Statut juridique : ${editeur.statut}.`,
+      `Immatriculation : ${editeur.immatriculation}.`,
+      `Siège : ${editeur.siege}.`,
+      `Responsable de la publication : ${editeur.responsable}.`,
+      `Contact : ${contact.email} — ${contact.telPrincipal}.`,
+    ],
+  },
+  {
+    titre: 'Hébergement',
+    contenu: [
+      'Le site est hébergé par Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, États-Unis.',
+      'Les pages sont servies depuis un réseau de serveurs répartis, sans base de données côté serveur.',
+    ],
+  },
+  {
+    titre: 'Données personnelles',
+    contenu: [
+      "Le site ne dépose aucun cookie publicitaire et n'utilise aucun traceur permettant de vous identifier.",
+      "Les seules données collectées sont celles que vous saisissez volontairement dans le formulaire de contact : nom, moyen de contact et message. Elles servent uniquement à répondre à votre demande et ne sont ni revendues ni transmises à des tiers.",
+      "Vous pouvez à tout moment demander l'accès, la rectification ou la suppression de ces données en écrivant à " +
+        contact.email +
+        '.',
+    ],
+  },
+  {
+    titre: 'Mesure d’audience',
+    contenu: [
+      "La fréquentation du site est mesurée avec un outil qui ne dépose pas de cookie et ne conserve aucune donnée permettant de vous reconnaître d'une visite à l'autre. C'est pourquoi aucun bandeau de consentement ne vous est demandé.",
+    ],
+  },
+  {
+    titre: 'Propriété intellectuelle',
+    contenu: [
+      `Les textes, le logo et les éléments graphiques présentés sur ce site sont la propriété de ${editeur.raisonSociale}. Toute reproduction sans autorisation écrite préalable est interdite.`,
+    ],
+  },
+  {
+    titre: 'Activité optique',
+    contenu: [mentionMonture],
+  },
+];
+---
+
+<Base
+  titre="Mentions légales"
+  description={`Mentions légales du site ${site.nom} : éditeur, hébergement, données personnelles et propriété intellectuelle.`}
+>
+  <section class="degrade-up text-white">
+    <div class="mx-auto max-w-4xl px-5 py-14 text-center lg:px-8 lg:py-20">
+      <h1 class="titre-up text-3xl sm:text-4xl lg:text-5xl">Mentions légales</h1>
+      <p class="prose-up mx-auto mt-6 text-white/90">
+        Qui édite ce site, où il est hébergé, et ce que deviennent les informations que vous nous
+        transmettez.
+      </p>
+    </div>
+  </section>
+
+  <Vague sens="descendante" couleur="degrade" class="-mt-px rotate-180" />
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-3xl space-y-12 px-5 py-14 lg:px-8 lg:py-20">
+      {
+        sections.map((bloc) => (
+          <article>
+            <h2 class="titre-up text-xl text-up-violet sm:text-2xl">{bloc.titre}</h2>
+            <div class="mt-4 space-y-3">
+              {bloc.contenu.map((p) => (
+                <p class="text-up-gris leading-relaxed">{p}</p>
+              ))}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Base>

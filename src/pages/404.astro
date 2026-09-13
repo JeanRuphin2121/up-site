@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+import { navigation } from '../data/site';
+
+const raccourcis = navigation.filter((lien) => lien.href !== '/');
+---
+
+<Base
+  titre="Page introuvable"
+  description="Cette page n'existe pas ou a été déplacée. Retrouvez les pages du site Univers des Possibilités."
+>
+  <section class="degrade-up text-white">
+    <div class="mx-auto max-w-3xl px-5 py-20 text-center lg:px-8 lg:py-28">
+      <p class="titre-up text-6xl sm:text-7xl">404</p>
+      <h1 class="titre-up mt-5 text-2xl sm:text-3xl">Cette page n'existe pas</h1>
+      <p class="prose-up mx-auto mt-6 text-white/90">
+        Le lien est peut-être erroné, ou la page a été déplacée. Voici où aller.
+      </p>
+
+      <ul class="mt-9 flex flex-wrap justify-center gap-2.5">
+        {
+          raccourcis.map((lien) => (
+            <li>
+              <a href={lien.href} class="bouton bouton-clair">
+                {lien.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <a href="/" class="mt-8 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4">
+        <Icone nom="fleche" class="h-4 w-4 rotate-180" />
+        Revenir à l'accueil
+      </a>
+    </div>
+  </section>
+</Base>

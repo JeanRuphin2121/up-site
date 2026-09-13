@@ -1,0 +1,115 @@
+---
+import Logo from './Logo.astro';
+import Icone from './Icone.astro';
+import Vague from './Vague.astro';
+import { site, contact, poles, navigation } from '../data/site';
+
+const annee = new Date().getFullYear();
+---
+
+<Vague sens="montante" couleur="degrade" class="-mb-px" />
+
+<footer class="degrade-up text-white">
+  <div class="mx-auto max-w-6xl px-5 py-14 lg:px-8 lg:py-16">
+    <div class="grid gap-10 md:grid-cols-3 lg:gap-14">
+      <div>
+        <Logo variante="blanc" />
+        <p class="mt-5 max-w-xs text-sm leading-relaxed text-white/80">
+          {site.promesse}
+        </p>
+        <p class="mt-6 text-lg font-extrabold tracking-wide text-white/90">
+          {site.signature}
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wider text-white/70">Nos expertises</h2>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {
+            poles.map((pole) => (
+              <li>
+                <a href={`/expertises/#${pole.id}`} class="text-white/85 transition-colors hover:text-white">
+                  {pole.titre}
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a href="/up-monture/" class="text-white/85 transition-colors hover:text-white">
+              UP Monture
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-sm font-bold uppercase tracking-wider text-white/70">Nous joindre</h2>
+        <ul class="mt-4 space-y-3.5 text-sm">
+          <li>
+            <a
+              href={`tel:${contact.telPrincipalBrut}`}
+              class="inline-flex items-center gap-2.5 text-white/85 transition-colors hover:text-white"
+            >
+              <Icone nom="telephone" class="h-4 w-4 shrink-0" />
+              {contact.telPrincipal}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`tel:${contact.telSecondaireBrut}`}
+              class="inline-flex items-center gap-2.5 text-white/85 transition-colors hover:text-white"
+            >
+              <Icone nom="telephone" class="h-4 w-4 shrink-0" />
+              {contact.telSecondaire}
+            </a>
+          </li>
+          <li>
+            <a
+              href={`mailto:${contact.email}`}
+              class="inline-flex items-center gap-2.5 break-all text-white/85 transition-colors hover:text-white"
+            >
+              <Icone nom="enveloppe" class="h-4 w-4 shrink-0" />
+              {contact.email}
+            </a>
+          </li>
+        </ul>
+
+        <nav class="mt-7" aria-label="Navigation du pied de page">
+          <ul class="flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold text-white/70">
+            {
+              navigation.map((lien) => (
+                <li>
+                  <a href={lien.href} class="transition-colors hover:text-white">
+                    {lien.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a href="/mentions-legales/" class="transition-colors hover:text-white">
+                Mentions légales
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-3 border-t border-white/20 pt-6 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {annee} {site.nom}. Tous droits réservés.</p>
+      <p>
+        Site conçu par
+        <a
+          href="https://www.linkedin.com/in/ruphinaka"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-semibold text-white underline decoration-white/40 underline-offset-2 transition-colors hover:decoration-white"
+        >
+          Jean-Ruphin AKA
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

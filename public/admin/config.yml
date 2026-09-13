@@ -1,0 +1,63 @@
+# Configuration de l'interface d'administration (Decap CMS).
+# Le client se connecte sur /admin/ avec son compte GitHub : ce qu'il écrit
+# est enregistré directement dans le dépôt, et Cloudflare Pages republie le
+# site tout seul dans la minute qui suit.
+
+backend:
+  name: github
+  # ⚠️ À REMPLACER après création du dépôt : compte/nom-du-depot
+  repo: JeanRuphin2121/up-site
+  branch: main
+  # Passerelle d'authentification. Voir README, section « Activer /admin ».
+  base_url: https://api.netlify.com
+  site_domain: up-admin.netlify.app
+
+locale: fr
+publish_mode: simple
+
+media_folder: public/televersements
+public_folder: /televersements
+
+collections:
+  - name: articles
+    label: Actualités
+    label_singular: Article
+    folder: src/content/articles
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    summary: '{{titre}} — {{date | date("DD/MM/YYYY")}}'
+    sortable_fields: [date, titre]
+    fields:
+      - label: Titre
+        name: titre
+        widget: string
+        hint: Le titre affiché en haut de l'article et dans la liste des actualités.
+
+      - label: Résumé
+        name: description
+        widget: text
+        hint: Deux phrases maximum. C'est ce qui s'affiche dans la liste et sur WhatsApp quand le lien est partagé.
+
+      - label: Date de publication
+        name: date
+        widget: datetime
+        date_format: DD/MM/YYYY
+        time_format: false
+        picker_utc: false
+
+      - label: Auteur
+        name: auteur
+        widget: string
+        default: Univers des Possibilités
+        required: false
+
+      - label: Brouillon
+        name: brouillon
+        widget: boolean
+        default: false
+        hint: Coché, l'article reste invisible sur le site. Décochez-le quand il est prêt.
+
+      - label: Contenu
+        name: body
+        widget: markdown
+        hint: Le texte de l'article. Les images se glissent avec le bouton d'insertion.
