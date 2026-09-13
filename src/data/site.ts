@@ -13,7 +13,7 @@ export const site = {
   promesse: 'Suivi · Accompagnement · Satisfaction',
   description:
     "Univers des Possibilités accompagne les personnes et les organisations en Côte d'Ivoire : formation, insertion professionnelle, actions sociales et intermédiation commerciale.",
-  url: 'https://www.universdespossibilites.com',
+  url: 'https://up-site.gptteamdev.workers.dev',
 };
 
 export const contact = {
