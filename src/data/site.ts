@@ -23,10 +23,12 @@ export const contact = {
   /** Second numéro, affiché sur le kakémono des quatre pôles. */
   telSecondaire: '+225 01 01 86 24 85',
   telSecondaireBrut: '+2250101862485',
+  telTertiaire: '+225 05 64 79 74 64',
+  telTertiaireBrut: '+2250564797464',
   /** Numéro utilisé par le bouton WhatsApp flottant (format international sans signes). */
   whatsapp: '2250778347054',
-  email: 'universdespossibilites@gmail.com',
-  /** ⚠️ À compléter si le client possède des comptes. Laisser vide masque le lien. */
+  email: 'universdespossibilites7@gmail.com',
+  
   reseaux: {
     facebook: '',
     linkedin: '',
