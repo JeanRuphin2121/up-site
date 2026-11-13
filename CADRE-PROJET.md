@@ -83,8 +83,17 @@ Pour les corrections ponctuelles, je reste joignable, sans garantie de délai.
 
 Le site ne peut pas être mis en ligne tant que ces points ne sont pas tranchés.
 
-| Point à trancher | Pourquoi |
+| Point à trancher | Où on en est |
 | --- | --- |
+| **Nombre de pôles** | Réglé : quatre pôles. Le « changement de mentalité » est présenté comme l'offre « Formation d'excellence pour établissements et entreprises » (affiche reçue le 13/11). |
+| **Numéros** | Réglé : trois numéros affichés, le 07 78 34 70 54 en principal et sur WhatsApp. |
+| **Adresse e-mail** | Réglé : universdespossibilites7@gmail.com. |
+| **Domaine** | **À faire** : `universdespossibilites.com` est imprimé sur les affiches mais n'est réservé par personne. Il faut l'acheter, à votre nom, avant qu'un tiers ne le prenne. En attendant, le site est en ligne sur une adresse provisoire. |
+| **Raison sociale et statut** | **À fournir** : obligatoire pour les mentions légales (forme juridique, RCCM, adresse exacte du siège à Abidjan, responsable de publication). |
+| **Photos réelles** | Les visuels des affiches sont des images générées. Pour ajouter une galerie, il faut de vraies photos de vos actions. |
+| **Témoignages** | Deux ou trois, avec le nom de la personne et son accord écrit. Sans cela, pas de section témoignages : de faux avis se repèrent et abîment la crédibilité. |
+
+--- | --- |
 | **Nombre de pôles exact** | Le document que vous m'avez transmis en annonce cinq, les kakémonos n'en montrent que quatre. Le pôle « changement de mentalité / développement personnel » n'apparaît sur aucun support. À confirmer : quatre ou cinq ? |
 | **Numéro principal** | Deux numéros circulent, et l'un d'eux apparaît mal découpé dans votre document. Lequel doit sonner en premier ? Lequel est sur WhatsApp ? |
 | **Domaine** | `universdespossibilites.com` est déjà imprimé sur le kakémono. Est-il réservé, et à quel nom ? |

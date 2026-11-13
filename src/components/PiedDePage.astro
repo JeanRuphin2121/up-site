@@ -45,24 +45,19 @@ const annee = new Date().getFullYear();
       <div>
         <h2 class="text-sm font-bold uppercase tracking-wider text-white/70">Nous joindre</h2>
         <ul class="mt-4 space-y-3.5 text-sm">
-          <li>
-            <a
-              href={`tel:${contact.telPrincipalBrut}`}
-              class="inline-flex items-center gap-2.5 text-white/85 transition-colors hover:text-white"
-            >
-              <Icone nom="telephone" class="h-4 w-4 shrink-0" />
-              {contact.telPrincipal}
-            </a>
-          </li>
-          <li>
-            <a
-              href={`tel:${contact.telSecondaireBrut}`}
-              class="inline-flex items-center gap-2.5 text-white/85 transition-colors hover:text-white"
-            >
-              <Icone nom="telephone" class="h-4 w-4 shrink-0" />
-              {contact.telSecondaire}
-            </a>
-          </li>
+          {
+            contact.telephones.map((tel) => (
+              <li>
+                <a
+                  href={`tel:${tel.brut}`}
+                  class="inline-flex items-center gap-2.5 text-white/85 transition-colors hover:text-white"
+                >
+                  <Icone nom="telephone" class="h-4 w-4 shrink-0" />
+                  {tel.affiche}
+                </a>
+              </li>
+            ))
+          }
           <li>
             <a
               href={`mailto:${contact.email}`}
@@ -71,6 +66,10 @@ const annee = new Date().getFullYear();
               <Icone nom="enveloppe" class="h-4 w-4 shrink-0" />
               {contact.email}
             </a>
+          </li>
+          <li class="flex items-center gap-2.5 text-white/85">
+            <Icone nom="lieu" class="h-4 w-4 shrink-0" />
+            {contact.ville}
           </li>
         </ul>
 

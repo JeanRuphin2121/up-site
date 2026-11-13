@@ -1,6 +1,7 @@
 # Site Univers des Possibilités
 
-Site vitrine statique. Astro 5 + Tailwind 4, contenu en Markdown, hébergement Cloudflare Pages.
+Site vitrine statique. Astro 5 + Tailwind 4, contenu en Markdown, hébergement Cloudflare Workers
+(fichiers statiques, voir `wrangler.jsonc`).
 Aucune base de données, aucun serveur à administrer : le site est un dossier de fichiers HTML
 recalculé à chaque modification du dépôt.
 
@@ -23,9 +24,10 @@ Node 20 ou supérieur.
 
 | Ce que vous voulez changer | Fichier |
 | --- | --- |
-| Numéros, e-mail, réseaux sociaux | `src/data/site.ts` |
+| Numéros, e-mail, ville, réseaux sociaux | `src/data/site.ts` (`contact.telephones` pour les numéros) |
 | Texte des quatre pôles | `src/data/site.ts`, tableau `poles` |
 | Services UP Monture | `src/data/site.ts`, tableau `servicesMonture` |
+| Formations établissements / entreprises, métiers verts et bleus | `src/data/site.ts`, `formationsOrganisations` et `metiersVertsBleus` |
 | Couleurs, polices, boutons | `src/styles/global.css` |
 | Menu de navigation | `src/data/site.ts`, tableau `navigation` |
 | Articles d'actualité | `src/content/articles/*.md` |
@@ -40,17 +42,34 @@ dans une page.
 
 ## Ce qui reste à renseigner avant la mise en ligne
 
-Ces valeurs sont volontairement fausses dans le dépôt, pour qu'une mise en ligne prématurée
-soit impossible à manquer. Chercher `À REMPLACER` et `À COMPLÉTER` dans le projet.
+Chercher `À COMPLÉTER` dans le projet.
 
-1. **`astro.config.mjs`** — le domaine définitif.
-2. **`src/data/site.ts`** — `web3formsKey`, la clé du formulaire de contact.
-3. **`src/layouts/Base.astro`** — le jeton Cloudflare Web Analytics, et retirer les commentaires
+1. **Domaine** — `universdespossibilites.com` est imprimé sur les affiches mais **n'est pas
+   réservé** (vérifié le 13/11/2026). Le site tourne sur `up-site.gptteamdev.workers.dev`.
+   Une fois le domaine acheté et branché (voir plus bas), remplacer l'adresse dans
+   `astro.config.mjs` (`site`) et `src/data/site.ts` (`site.url`). Le sitemap et `robots.txt`
+   suivent automatiquement.
+2. **`src/layouts/Base.astro`** — le jeton Cloudflare Web Analytics, et retirer les commentaires
    autour de la balise `<script>`.
-4. **`public/admin/config.yml`** — le nom du dépôt GitHub.
-5. **`src/pages/mentions-legales.astro`** — raison sociale, statut, immatriculation, siège,
-   responsable de publication.
-6. **`public/robots.txt`** — l'adresse du sitemap si le domaine change.
+3. **`public/admin/config.yml`** — `site_domain`, une fois la passerelle Netlify créée.
+4. **`src/pages/mentions-legales.astro`** — forme juridique, immatriculation (RCCM), adresse
+   exacte du siège, responsable de publication.
+
+La clé Web3Forms du formulaire est déjà en place dans `src/data/site.ts`.
+
+---
+
+## Ajouter un pôle ou un nouveau secteur
+
+Le client prévoit de s'étendre (immobilier, agriculture, transport…). Le site est prévu pour :
+
+1. Ajouter une entrée au tableau `poles` de `src/data/site.ts` (`id`, `titre`, `accroche`,
+   `intro`, `prestations`, `icone`).
+2. Si aucun pictogramme existant ne convient, en ajouter un dans `src/components/Icone.astro`
+   (et son nom dans le type `Pole['icone']`).
+
+L'accueil, la page Expertises, le sommaire, le pied de page et la liste déroulante du formulaire
+de contact se mettent à jour seuls.
 
 ---
 
@@ -68,21 +87,22 @@ Les messages arrivent directement dans la boîte e-mail indiquée. Rien n'est st
 
 ---
 
-## Mise en ligne sur Cloudflare Pages
+## Mise en ligne sur Cloudflare
+
+Le site est déployé comme un Worker qui sert le dossier `dist/` (`wrangler.jsonc`).
 
 1. Pousser le dépôt sur GitHub.
-2. Sur dash.cloudflare.com : **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
-3. Sélectionner le dépôt, puis configurer :
-   - Framework preset : **Astro**
-   - Build command : `npm run build`
-   - Output directory : `dist`
-4. Déployer. Chaque `git push` sur `main` republie le site automatiquement.
+2. Sur dash.cloudflare.com : **Workers & Pages** → **Create** → **Import a repository**.
+3. Build command : `npm run build`. Deploy command : `npx wrangler deploy`.
+4. Chaque `git push` sur `main` republie le site automatiquement.
 
 ### Domaine personnalisé
 
-Dans l'onglet **Custom domains** du projet Pages, ajouter `universdespossibilites.com` et
-`www.universdespossibilites.com`. Cloudflare indique les enregistrements DNS à créer chez le
-registrar. Le certificat HTTPS est émis automatiquement, sans intervention.
+1. Réserver `universdespossibilites.com` **au nom du client** (chez Cloudflare Registrar ou un
+   autre registrar).
+2. Dans le Worker : **Settings** → **Domains & Routes** → ajouter `universdespossibilites.com`
+   et `www.universdespossibilites.com`. Le certificat HTTPS est émis automatiquement.
+3. Mettre à jour `site` / `site.url` comme indiqué plus haut.
 
 ### Mesure d'audience
 
@@ -121,7 +141,7 @@ compte GitHub et l'ajouter comme collaborateur du dépôt.
 
 - **Aucune galerie photo, aucun témoignage.** Les visuels des supports imprimés sont des images
   générées, non des photos réelles d'activité. Publier de fausses références serait un risque de
-  crédibilité pour l'association. Ces sections s'ajouteront quand de vraies photos et de vrais
+  crédibilité pour l'entreprise. Ces sections s'ajouteront quand de vraies photos et de vrais
   témoignages signés seront fournis.
 - **Aucune mention de tarif.** Rien de communiqué à ce stade.
 - **Aucune statistique de type « X personnes accompagnées ».** Aucun chiffre vérifiable fourni.

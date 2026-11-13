@@ -11,9 +11,9 @@ import { site, contact, mentionMonture } from '../data/site';
  */
 const editeur = {
   raisonSociale: 'Univers des Possibilités',
-  statut: 'À COMPLÉTER — statut juridique (association, SARL, entreprise individuelle…)',
+  statut: 'À COMPLÉTER — forme juridique de l’entreprise (SARL, SAS, entreprise individuelle…)',
   immatriculation: 'À COMPLÉTER — numéro d’enregistrement ou RCCM',
-  siege: 'À COMPLÉTER — adresse du siège',
+  siege: 'À COMPLÉTER — adresse exacte du siège, Abidjan, Côte d’Ivoire',
   responsable: 'À COMPLÉTER — nom du responsable de publication',
 };
 
@@ -26,7 +26,7 @@ const sections = [
       `Immatriculation : ${editeur.immatriculation}.`,
       `Siège : ${editeur.siege}.`,
       `Responsable de la publication : ${editeur.responsable}.`,
-      `Contact : ${contact.email} — ${contact.telPrincipal}.`,
+      `Contact : ${contact.email} — ${contact.telephones.map((tel) => tel.affiche).join(', ')}.`,
     ],
   },
   {

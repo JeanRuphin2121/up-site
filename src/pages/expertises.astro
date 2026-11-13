@@ -3,19 +3,19 @@ import Base from '../layouts/Base.astro';
 import Vague from '../components/Vague.astro';
 import CartePole from '../components/CartePole.astro';
 import Icone from '../components/Icone.astro';
-import { poles } from '../data/site';
+import { poles, formationsOrganisations, metiersVertsBleus } from '../data/site';
 ---
 
 <Base
   titre="Nos expertises"
-  description="Éducation et formation, insertion professionnelle, actions sociales et intermédiation commerciale : les quatre domaines d'intervention d'Univers des Possibilités."
+  description="Éducation et formation, insertion professionnelle, actions sociales, intermédiation commerciale, formations pour établissements et entreprises, métiers verts et bleus : ce que fait Univers des Possibilités."
 >
   <section class="degrade-up text-white">
     <div class="mx-auto max-w-4xl px-5 py-14 text-center lg:px-8 lg:py-20">
       <h1 class="titre-up text-3xl sm:text-4xl lg:text-5xl">Nos expertises</h1>
       <p class="prose-up mx-auto mt-6 text-white/90">
-        Quatre pôles, une seule logique : partir de la situation réelle de la personne ou de
-        l'organisation, puis l'accompagner jusqu'au résultat.
+        Quatre pôles et des programmes dédiés, une seule logique : partir de la situation réelle
+        de la personne ou de l'organisation, puis l'accompagner jusqu'au résultat.
       </p>
     </div>
   </section>
@@ -38,12 +38,83 @@ import { poles } from '../data/site';
           </li>
         ))
       }
+      <li>
+        <a
+          href="#formation-organisations"
+          class="inline-flex items-center gap-2 rounded-full border border-up-ligne px-4 py-2 text-sm font-semibold text-up-violet transition-colors hover:bg-up-brume"
+        >
+          <Icone nom="education" class="h-4 w-4" />
+          Établissements et entreprises
+        </a>
+      </li>
+      <li>
+        <a
+          href="#metiers-verts-bleus"
+          class="inline-flex items-center gap-2 rounded-full border border-up-ligne px-4 py-2 text-sm font-semibold text-up-violet transition-colors hover:bg-up-brume"
+        >
+          <Icone nom="globe" class="h-4 w-4" />
+          Métiers verts et bleus
+        </a>
+      </li>
     </ul>
   </nav>
 
   <section class="bg-white">
     <div class="mx-auto max-w-6xl space-y-20 px-5 py-14 lg:space-y-28 lg:px-8 lg:py-20">
       {poles.map((pole, i) => <CartePole pole={pole} inverse={i % 2 === 1} />)}
+    </div>
+  </section>
+
+  <!-- ===================== Offres issues des affiches ===================== -->
+  <section id="formation-organisations" class="bg-up-brume">
+    <div class="mx-auto max-w-6xl px-5 py-14 lg:px-8 lg:py-20">
+      <p class="text-center text-sm font-semibold tracking-wide text-up-magenta">
+        {formationsOrganisations.accroche}
+      </p>
+      <h2 class="titre-up mx-auto mt-3 max-w-3xl text-center text-2xl sm:text-3xl">
+        {formationsOrganisations.titre}
+      </h2>
+
+      <ol class="mt-12 grid gap-6 sm:grid-cols-2">
+        {
+          formationsOrganisations.modules.map((module, i) => (
+            <li class="flex gap-5 rounded-3xl bg-white p-6 shadow-sm shadow-up-violet/5 sm:p-7">
+              <span class="degrade-up grid h-10 w-10 shrink-0 place-items-center rounded-full text-base font-extrabold text-white">
+                {i + 1}
+              </span>
+              <div class="min-w-0">
+                <h3 class="font-bold text-up-encre">{module.titre}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-up-gris">{module.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section id="metiers-verts-bleus" class="bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-14 lg:px-8 lg:py-20">
+      <p class="text-center text-sm font-semibold tracking-wide text-up-magenta">
+        {metiersVertsBleus.accroche}
+      </p>
+      <h2 class="titre-up mt-3 text-center text-2xl sm:text-3xl">{metiersVertsBleus.titre}</h2>
+
+      <ul class="mt-12 grid gap-6 md:grid-cols-3">
+        {
+          metiersVertsBleus.programmes.map((programme) => (
+            <li class="rounded-3xl border border-up-ligne p-6 sm:p-7">
+              <h3 class="titre-up text-lg text-up-encre">{programme.titre}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-up-gris">{programme.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="prose-up mx-auto mt-10 text-center text-up-gris">
+        La réparation et le recyclage de lunettes font aussi partie de cette démarche, avec
+        <a href="/up-monture/" class="font-semibold text-up-violet underline underline-offset-2">UP Monture</a>.
+      </p>
     </div>
   </section>
 

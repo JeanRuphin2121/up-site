@@ -48,35 +48,24 @@ const messageWhatsApp = encodeURIComponent('Bonjour, je vous contacte depuis vot
               </a>
             </li>
 
-            <li>
-              <a
-                href={`tel:${contact.telPrincipalBrut}`}
-                class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4 transition-colors hover:bg-up-brume"
-              >
-                <div class="medaillon h-12 w-12">
-                  <span><Icone nom="telephone" class="h-5 w-5 text-up-violet" /></span>
-                </div>
-                <div>
-                  <p class="font-bold text-up-encre">{contact.telPrincipal}</p>
-                  <p class="text-sm text-up-gris">Ligne principale</p>
-                </div>
-              </a>
-            </li>
-
-            <li>
-              <a
-                href={`tel:${contact.telSecondaireBrut}`}
-                class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4 transition-colors hover:bg-up-brume"
-              >
-                <div class="medaillon h-12 w-12">
-                  <span><Icone nom="telephone" class="h-5 w-5 text-up-violet" /></span>
-                </div>
-                <div>
-                  <p class="font-bold text-up-encre">{contact.telSecondaire}</p>
-                  <p class="text-sm text-up-gris">Second numéro</p>
-                </div>
-              </a>
-            </li>
+            {
+              contact.telephones.map((tel) => (
+                <li>
+                  <a
+                    href={`tel:${tel.brut}`}
+                    class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4 transition-colors hover:bg-up-brume"
+                  >
+                    <div class="medaillon h-12 w-12">
+                      <span><Icone nom="telephone" class="h-5 w-5 text-up-violet" /></span>
+                    </div>
+                    <div>
+                      <p class="font-bold text-up-encre">{tel.affiche}</p>
+                      <p class="text-sm text-up-gris">{tel.libelle}</p>
+                    </div>
+                  </a>
+                </li>
+              ))
+            }
 
             <li>
               <a
@@ -91,6 +80,16 @@ const messageWhatsApp = encodeURIComponent('Bonjour, je vous contacte depuis vot
                   <p class="text-sm text-up-gris">Pour les demandes détaillées</p>
                 </div>
               </a>
+            </li>
+
+            <li class="flex items-center gap-4 rounded-2xl border border-up-ligne p-4">
+              <div class="medaillon h-12 w-12">
+                <span><Icone nom="lieu" class="h-5 w-5 text-up-violet" /></span>
+              </div>
+              <div>
+                <p class="font-bold text-up-encre">{contact.ville}</p>
+                <p class="text-sm text-up-gris">Notre ville</p>
+              </div>
             </li>
           </ul>
         </div>
@@ -162,6 +161,8 @@ const messageWhatsApp = encodeURIComponent('Bonjour, je vous contacte depuis vot
                 class="mt-2 w-full rounded-xl border border-up-ligne bg-white px-4 py-3 text-up-encre outline-none transition-colors focus:border-up-violet"
               >
                 {poles.map((pole) => <option value={pole.titre}>{pole.titre}</option>)}
+                <option value="Formation établissements et entreprises">Formation pour établissements et entreprises</option>
+                <option value="Métiers verts et bleus">Métiers verts et bleus</option>
                 <option value="UP Monture">UP Monture</option>
                 <option value="Autre">Autre sujet</option>
               </select>

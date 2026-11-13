@@ -2,7 +2,8 @@
  * Source unique de vérité pour tout le contenu structurel du site.
  * Si un numéro, un e-mail ou une accroche change, il se change ICI et nulle part ailleurs.
  *
- * Les valeurs proviennent des deux kakémonos officiels fournis par le client.
+ * Les valeurs proviennent des kakémonos et affiches officiels fournis par le client,
+ * complétés par ses messages du 13/11/2026 (troisième numéro, e-mail confirmé).
  */
 
 export const site = {
@@ -13,22 +14,32 @@ export const site = {
   promesse: 'Suivi · Accompagnement · Satisfaction',
   description:
     "Univers des Possibilités accompagne les personnes et les organisations en Côte d'Ivoire : formation, insertion professionnelle, actions sociales et intermédiation commerciale.",
+  /**
+   * Adresse publique actuelle du site. À remplacer, ainsi que `site` dans astro.config.mjs,
+   * le jour où universdespossibilites.com sera réellement réservé et branché.
+   */
   url: 'https://up-site.gptteamdev.workers.dev',
 };
 
+export type Telephone = { affiche: string; brut: string; libelle: string };
+
+/** Tous les numéros, dans l'ordre d'affichage (page contact, pied de page). */
+const telephones: Telephone[] = [
+  { affiche: '+225 07 78 34 70 54', brut: '+2250778347054', libelle: 'Ligne principale et WhatsApp' },
+  { affiche: '+225 01 01 86 24 85', brut: '+2250101862485', libelle: 'Second numéro' },
+  { affiche: '+225 05 64 79 74 64', brut: '+2250564797464', libelle: 'Troisième numéro' },
+];
+
 export const contact = {
-  /** Numéro principal — celui affiché sur les deux kakémonos. */
-  telPrincipal: '+225 07 78 34 70 54',
-  telPrincipalBrut: '+2250778347054',
-  /** Second numéro, affiché sur le kakémono des quatre pôles. */
-  telSecondaire: '+225 01 01 86 24 85',
-  telSecondaireBrut: '+2250101862485',
-  telTertiaire: '+225 05 64 79 74 64',
-  telTertiaireBrut: '+2250564797464',
+  telephones,
+  /** Numéro principal — celui des boutons d'appel, présent sur tous les supports. */
+  telPrincipal: telephones[0].affiche,
+  telPrincipalBrut: telephones[0].brut,
   /** Numéro utilisé par le bouton WhatsApp flottant (format international sans signes). */
   whatsapp: '2250778347054',
   email: 'universdespossibilites7@gmail.com',
-  
+  ville: "Abidjan, Côte d'Ivoire",
+
   reseaux: {
     facebook: '',
     linkedin: '',
@@ -115,10 +126,10 @@ export type ServiceMonture = {
   titre: string;
   accroche: string;
   details: string[];
-  icone: 'entretien' | 'monture' | 'reseau';
+  icone: 'entretien' | 'monture' | 'reseau' | 'recyclage';
 };
 
-/** Les trois services du kakémono UP Monture. */
+/** Les trois services du kakémono UP Monture, plus la réparation présentée sur l'affiche « métiers verts et bleus ». */
 export const servicesMonture: ServiceMonture[] = [
   {
     titre: 'Nettoyage et entretien à domicile',
@@ -150,6 +161,16 @@ export const servicesMonture: ServiceMonture[] = [
     ],
     icone: 'reseau',
   },
+  {
+    titre: 'Réparation et recyclage',
+    accroche: 'Donnez une seconde vie à vos lunettes.',
+    details: [
+      'Réparation de vos lunettes',
+      'Recyclage des montures usagées',
+      "Un service d'économie circulaire innovant, porté par Univers des Possibilités",
+    ],
+    icone: 'recyclage',
+  },
 ];
 
 /**
@@ -158,6 +179,64 @@ export const servicesMonture: ServiceMonture[] = [
  */
 export const mentionMonture =
   "UP Monture ne propose ni consultation ni vente de verres correcteurs. Nous vous mettons en relation avec des professionnels agréés (opticiens, ophtalmologistes).";
+
+export type Programme = {
+  titre: string;
+  description: string;
+};
+
+/**
+ * Affiche « Formation d'excellence pour établissements et entreprises ».
+ * Répond au pôle « changement de mentalité » évoqué par le client :
+ * il est traité comme une offre de formation, pas comme un cinquième pôle.
+ */
+export const formationsOrganisations = {
+  titre: "Formation d'excellence pour établissements et entreprises",
+  accroche: 'Transformer les mentalités, élever les compétences.',
+  modules: [
+    {
+      titre: 'Management éducatif de pointe',
+      description: "Former les leaders de demain : chefs d'établissement, directeurs des études.",
+    },
+    {
+      titre: 'Pédagogie et encadrement de qualité',
+      description: 'Outils et stratégies pour enseignants et encadreurs, au service des élèves.',
+    },
+    {
+      titre: 'Leadership et transformation organisationnelle',
+      description:
+        "Renforcer la culture d'entreprise, la performance et l'agilité des équipes dirigeantes.",
+    },
+    {
+      titre: 'Réflexion profonde et débats sociétaux',
+      description:
+        "Aborder les questions complexes et les tabous qui freinent la société, pour une éducation de qualité.",
+    },
+  ] satisfies Programme[],
+};
+
+/** Affiche « Votre avenir se construit dans les métiers verts et bleus ». */
+export const metiersVertsBleus = {
+  titre: 'Les métiers verts et bleus',
+  accroche: "Votre avenir se construit dans les métiers d'avenir.",
+  programmes: [
+    {
+      titre: 'Formation économie verte',
+      description:
+        'Énergies renouvelables, éco-construction, gestion durable des ressources : se préparer aux métiers du futur.',
+    },
+    {
+      titre: 'Emplois aquatiques durables',
+      description:
+        "Économie bleue : pêche durable, aquaculture et valorisation des ressources de l'eau.",
+    },
+    {
+      titre: 'Coaching carrière jeunesse',
+      description:
+        'Orientation personnalisée, insertion professionnelle et mentorat pour les jeunes.',
+    },
+  ] satisfies Programme[],
+};
 
 export const navigation = [
   { href: '/', label: 'Accueil' },
